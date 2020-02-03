@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sht.dao.PersonDao">
+	<select id="getAllPerson" resultType="com.sht.entity.Person">
+		SELECT * FROM tb_person  order by priority DESC LIMIT #{rowIndex},#{pageSize};
+	</select>
+	<insert id="addPerson" useGeneratedKeys="true" keyColumn="user_id" keyProperty="userId">
+		INSERT INTO
+		tb_person(user_name,pass_word,priority,true_name,money,phone,addr)
+		VALUES
+		(#{userName},#{passWord},#{priority},#{trueName},#{money},#{phone},#{addr})
+	</insert>
+	<update id="updatePerson" parameterType="com.sht.entity.Person">
+		UPDATE tb_person
+		<set>
+			<if test="userName != null">user_name=#{userName},</if>
+			<if test="passWord != null">pass_word=#{passWord},</if>
+			<if test="priority != null">priority=#{priority},</if>
+			<if test="trueName != null">true_name=#{trueName},</if>
+			<if test="money != null">money=#{money},</if>
+			<if test="phone != null">phone=#{phone},</if>
+			<if test="addr != null">addr=#{addr}</if>
+		</set>
+		where user_id=#{userId}
+	</update>
+	
+	<delete id="deletePersonById" parameterType="int">
+		delete from tb_person where user_id=#{userId}
+	</delete>
+</mapper>

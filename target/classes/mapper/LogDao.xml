@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sht.dao.LogDao">
+<resultMap type="com.sht.entity.Log" id="resultLog">
+	<id column="log_id" property="logId"/>
+	<result column="log_time" property="logTime"/>
+	<result column="log_des" property="logDes"/>
+	<association property="person" column="user_id" javaType="com.sht.entity.Person">
+		<id column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+	</association>
+</resultMap>
+
+
+	<insert id="insertLog" useGeneratedKeys="true" keyColumn="log_id" keyProperty="logId" parameterType="com.sht.entity.Log">
+		insert into tb_log
+		(log_time,log_des,user_id)
+		values
+		(#{logTime},#{logDes},#{person.userId})
+	</insert>
+	
+	<delete id="deleteLog">
+		delete from tb_log where log_id=#{logId}
+	</delete>
+	
+	<select id="queryLog" parameterType="com.sht.entity.Log" resultMap="resultLog">
+		select
+		l.log_id,l.log_time,l.log_des,
+		p.user_id,p.user_name
+		from
+		tb_person p,
+		tb_log l
+		<where>
+			<if test="logId != null">log_id=#{logId}</if>
+			<if test="logTime != null">and log_time=#{logTime}</if>
+			<if test="logDes != null">and log_des=#{logDes}</if>
+			<if test="person != null">and l.user_id=#{person.userId}</if>
+			and 
+			p.user_id=l.user_id
+		</where>
+		order by CONVERT(log_time USING gbk) DESC
+	</select>
+</mapper>

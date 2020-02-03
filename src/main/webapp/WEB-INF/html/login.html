@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>用户登入</title>
+
+<link rel="stylesheet" type="text/css" href="../resources/css/login/style.css">
+
+<script type="text/javascript" src="../resources/js/login/jquery.min.js"></script>
+<script type="text/javascript" src="../resources/js/login/vector.js"></script>
+
+</head>
+<body>
+
+
+<div style="z-index:9999;position:absolute;left:37%;top:17%">
+	<strong style="font-size:20px">Second-Hand Trading Platform(Login In)</strong>
+</div>
+<div id="container">
+	<div id="output">
+		<div class="containerT">
+			<h1>用户登录</h1>
+			<form class="form" id="entry_form">
+				<input type="text" placeholder="用户名" id="entry_name">
+				<input type="password" placeholder="密码" id="entry_password">
+				<button type="button" id="entry_btn">登录</button>				
+				<div id="prompt" class="prompt">
+					<p>如果没有账户，请<a href="/sht/main/operationperson">点我注册</a></p>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(function(){
+        Victor("container", "output");   //登陆背景函数
+        $("#entry_name").focus();
+        $(document).keydown(function(event){
+            if(event.keyCode==13){
+                $("#entry_btn").click();
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript" src="../resources/js/login/login.js"></script>
+<script src="../resources/vendor/js/jquery-3.2.1.min.js"></script>
+
+</body>
+</html>

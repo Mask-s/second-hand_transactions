@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>商品详情</title>
+	
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+<body>
+<div style="width:100%;height:780px;background-color:#e6e6e6;">
+	<!-- 图片 -->
+	<div style="width:260px;height:260px;float:left;margin-left:180px;margin-top:100px;text-align:center;">
+		<p style="font-size:20px">商品预览</p>
+		<img id="shopImg" alt="图片无法显示" src="" style="margin-top:30px;border:2px solid red">
+	</div>
+	
+	<!-- 购买信息 -->
+	<div style="width:500px;height:400px;float:left;margin-left:50px;margin-top:10px;">
+		<div style="font-size:30px;margin-top:30px"><p id="shopName" style="color:#040404;">二手转卖</p></div>
+		
+		<div style="font-size:40px;margin-top:30px">
+			<strong style="color:red;font-size:20px;">￥  <span id="price" style="color:red;font-size:40px">999</span></strong>
+			<p style="float:right;font-size:10px;margin-top:20px;margin-right:200px">累计浏览  <span id="counts">0</span>  次</p>
+		</div>
+		
+		<div style="font-size:15px;width:300px;margin-top:30px;">
+			<p style="margin-top:3px;font-size:15px;float:left;margin-right:50px">数量</p>
+			<a href="javascript:;"><span class="glyphicon glyphicon-minus" id="minus" style="font-size:20px;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="text" disabled="disabled" style="width:30px;text-align:center;border-radius:10px;" id="numCount" value=1>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="javascript:;"><span class="glyphicon glyphicon-plus" id="plus" style="font-size:20px;"></span></a>
+			<p style="float:right;margin-top:7px;font-size:10px">剩余库存(<span id="shopNumber" style="font-size:10px">10</span>)</p>
+		</div>
+		
+		<div>
+			<button type="button" id="buy" class="btn btn-default btn-sm" style="background-color:red;width:180px;height:50px;border:0px;margin-top:30px;float:left;margin-left:-80px">
+				<span class="glyphicon glyphicon-heart" style="color:#FFFFFF;font-size:15px"></span> 
+				<strong style="color:#FFFFFF;font-size:15px">立即购买</strong>
+			</button>
+		
+			<button type="button" id="back" class="btn btn-default btn-sm" style="background-color:red;width:180px;height:50px;border:0px;margin-top:30px;margin-left:50px">
+				<span class="glyphicon glyphicon-circle-arrow-left" style="color:#FFFFFF;font-size:15px"></span> 
+				<strong style="color:#FFFFFF;font-size:15px">下次再说</strong>
+			</button>
+		</div>
+		
+		
+		<p style="font-size:15px;margin-top:20px">邮费：包邮  支持货到付款 </p>
+		
+	</div>
+	
+	
+	<!-- 卖家信息 -->
+	<div style="width:310px;height:400px;float:left;margin-left:50px;margin-top:10px;">
+		<img style="margin-top:50px;border:1px solid gray;" alt="无法加载 " src="../resources/img/top.jpg">
+		<div style="font-size:15px;margin-top:30px;height:180px;">
+			<div style="width:310px;height:10px;"><p style="float:left;margin-left:50px">卖家昵称：</p><span id="userName" style="float:left;margin-left:50px">你大爷</span></div><br>
+			<div style="width:310px;height:10px;"><p style="float:left;margin-left:50px">卖家电话：</p><span id="phone" style="float:left;margin-left:50px">123456</span></div><br>
+			<div style="width:310px;height:10px;"><p style="float:left;margin-left:50px">发货地址：</p><span id="addr" style="float:left;margin-left:50px">他家</span></div><br>
+			<div style="width:310px;height:10px;"><p style="float:left;margin-left:50px">客服电话：</p><span style="float:left;margin-left:50px">654321</span></div>
+		</div>
+		<div><p style="color:red;text-align:center;font-size:15px">Top: 请文明的与小伙伴或者店家沟通！</p></div>
+	</div>
+	<!-- 评论区 -->
+	<div style="width:1145px;height:320px;float:left;border-radius:6px;margin-left:205px;margin-top:10px;text-align:center;border:2px solid #a6a6a6">
+		<p style="font-size:20px;margin-top:10px;float:left;margin-left:48%">评论专区</p>
+		<p style="float:left;margin-left:300px;margin-top:25px;font-size:10px;color:red;">Top:文明的评论是美好的开始！</p>
+		<hr style="margin-top:50px;border-color:#a6a6a6">
+		<div id="message" style="width:100%;height:70%;margin-top:-15px;overflow-y:scroll;">
+			<div style="width:100%;line-height:15px;text-align:left;margin-top:20px">
+				<strong style="font-size:15px;margin-left:30px;">张三:</strong><br>
+				<span style="font-size:12px;margin-left:60px;">dafagsgssdfsd张三</span>
+			</div>
+			<!-- 评论内容填充 -->
+		</div>
+		<hr style="margin-top:5px;border-top:2px solid #a6a6a6;">
+		<div style="width:100%;height:10%;margin-top:-18px;">
+			<input id="messageText" style="float:left;width:93.55%;border-radius:10px">
+			<button id="messageBtn" onclick="submitMessage()" style="border-radius:5px">确认提交</button>
+		</div>		
+	</div>
+</div>
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>              
+                <h4 class="modal-title" id="myModalLabel">订单确认</h4>               
+            </div>
+            <div class="modal-body">
+            	<div style="margin-left:20px;margin-top:20px">收货地址：<p style="margin-left:70px;"id="addr2">aaa</p></div>
+            	<div style="margin-left:20px;margin-top:20px">商品名：<p style="margin-left:70px;"id="shopName2">aaa</p></div>
+            	<div style="margin-left:20px;margin-top:20px">商品数量：<p style="margin-left:70px;"><span id="num2">aaa</span>个</p></div>
+            	<div style="margin-left:20px;margin-top:20px">商品单价：<p style="margin-left:70px;">￥<span id="price2">aaa</span></p></div>
+            	<div style="margin-left:20px;margin-top:20px">商品总价：<p style="margin-left:70px;">￥<span id="totalPrices2">aaa</span></p></div>
+            	<div style="margin-left:20px;margin-top:20px">收货人昵称：<p style="margin-left:70px;"id="userName2">aaa</p></div>
+            	<div id="wait" style="position:absolute;left:40%;top:40%;display:none;">
+					<img src="../resources/img/wait.gif">
+				</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="createOrder">购买</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+
+
+
+<!-- 底部 -->
+<div style="text-align:center">
+    <div>
+        <em>Cards Accepted:</em>
+    </div>
+    <div><i></i> <span>Copyright &copy; 2019.Company name All rights.</span></div>
+    <div><span>China</span></div>
+</div>
+	
+	
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="../resources/js/shop/detail.js"></script>
+	<script src="../resources/js/common/common.js"></script>
+</body>
+</html>

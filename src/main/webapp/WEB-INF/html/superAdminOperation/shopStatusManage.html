@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>商品审核</title>
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	
+	
+</head>
+
+<body>
+
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="height:60px;">
+	    <div class="container-fluid">
+	    	<div style="float: left;margin-top:15px;margin-left:20px">
+	    		<p style="font-size: 20px;">系统菜单</p>
+	    	</div>
+			
+		    <div class="navbar-header" style="margin-left:550px;margin-top:10px">
+		        <a class="navbar-brand" style="font-size:30px" href="#">欢迎来到管理系统</a>
+		    </div>
+		    
+		    <div style="float: right;margin-top:20px;margin-right:50px">
+			    <ul class="nav nav-tabs" style="border:0px" >
+				    <li class="dropdown">
+				        <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="session">
+				        <!-- session填充 -->
+				            <span class="caret"></span></a>
+				        <ul class="dropdown-menu" style="border-radius:6px;text-align:center;">
+				            <li>
+				                <a href="/sht/main/shopmainlist">商城主页</a>
+				                <hr style="margin:0px;">
+				            </li>
+				            <li>
+				            	<a href="/sht/main/user">个人中心</a>
+				            </li>
+				        </ul>
+				    </li>
+				</ul>
+			</div>
+			
+	    </div>
+	</nav>
+
+	<div id="container" style="width: 100%; margin-top: 60px;">
+
+
+		<div style="width: 10%; float: left;text-align: center;background-color: #EEEEEE;height:700px; ">
+			<ul class="nav nav-pills nav-stacked">
+			  <li><p style="font-size: 20px;padding-top:10px;">功能列表</p></li>
+			  <li style="padding-top:20px;"><a href="/sht/main/getperson">用户管理</a></li>
+			  <li><a href="/sht/main/shopstatusmanage">商品审核</a></li>
+			  <li><a href="/sht/main/logmanage">日志查看</a></li>
+			  <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+			  <li><a href="/sht/main/shopmainlist">返回主页</a></li>
+			</ul>
+		</div>
+
+		<div id="content"
+			style="background-color: #EEEEEE; height: 700px; width: 90%; float: right;">
+			<p style="font-size:20px;float:left;margin-top:20px;margin-left:5px;width:90%;text-align:center">商品审核</p>
+			<div id="shopFill" style="width:95%;height:550px;margin-left:30px;overflow-y:scroll;">
+				<div style="width:45%;height:19.7%;float:left;border:2px solid gray;margin-left:20px;margin-top:5px">
+					<img alt="加载失败" src="/upload\item\shop\1\2020012215283761409.jpg"  height="100%" style="float:left;">
+					<div style="float:left;margin-left:20px;width:155px;">商品名：<strong>手机</strong></div>
+					<div style="float:left;margin-left:20px;width:100px;">单价:&nbsp;&nbsp;￥<strong>2000</strong></div>
+					<div style="float:left;margin-left:20px;width:150px;">剩余库存:&nbsp;&nbsp;<strong>2</strong>&nbsp;&nbsp;个/斤</div>
+					<div style="float:left;margin-left:20px;width:400px;">商品描述:&nbsp;&nbsp;<strong>hakshghghw</strong></div>
+					<div style="float:left;width:400px;margin-left:20px">商品类型:&nbsp;&nbsp;<strong>手机</strong></div>
+					<div style="float:left;margin-left:-174px">商品状态:&nbsp;&nbsp;<strong>未上架</strong></div>
+					<div style="float:left;margin-top:15px;margin-left:80px;font-size:10px">
+						<button style="border-radius:5px;height:20px;float:left;color:red">审核不通过</button>
+						<button style="border-radius:5px;float:left;margin-left:120px;color:green">审核通过</button>
+					</div>
+				</div>
+
+			
+			
+			
+			<div>
+				<ul class="pagination" id="pagination"style="float:right;margin-right:680px">
+				<!-- 分页内容 -->
+				</ul>
+			</div>
+		</div>
+</div>
+		<div id="footer" style="clear: both; text-align: center; height: 60px;background-color: #EEEEEE;">
+			<hr>
+			版权 © 2019 超级管理员 商品管理
+		</div>
+
+	</div>
+	<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="../resources/js/user/shopStatusManage.js"></script>
+
+
+</body>
+</html>

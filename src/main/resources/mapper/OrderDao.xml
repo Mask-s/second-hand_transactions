@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sht.dao.OrderDao">
+	<resultMap type="com.sht.entity.Orders" id="orderMap">
+		<id column="order_id" property="orderId"/>
+		<result column="order_create_time" property="orderCreateTime"/>
+		<result column="order_status" property="orderStatus"/>
+		<result column="address" property="address"/>
+		<result column="number" property="number"/>
+		<result column="price" property="price"/>
+		<result column="shop_status" property="shopStatus"/>
+		<result column="order_number" property="orderNumber"/>
+		<association property="owner" column="owner_id" javaType="com.sht.entity.Person">
+			<id column="owners_id" property="userId"/>
+			<result column="owners_name" property="userName"/>
+			<result column="owners_phone" property="phone"/>
+			<result column="owners_money" property="money"/>
+		</association>
+		<association property="buyer" column="buyer_id" javaType="com.sht.entity.Person">
+			<id column="buyer_id" property="userId"/>
+			<result column="buyer_name" property="userName"/>
+			<result column="buyer_phone" property="phone"/>
+			<result column="buyer_money" property="money"/>
+		</association>
+		<association property="shop" column="shop_id" javaType="com.sht.entity.Shop">
+			<id column="shop_id" property="shopId"/>
+			<result column="shop_name" property="shopName"/>
+		</association>
+	</resultMap>
+
+
+
+
+	<insert id="createOrder" useGeneratedKeys="true" keyColumn="order_id" keyProperty="orderId" parameterType="com.sht.entity.Orders">
+		insert into tb_orders
+		(order_create_time,order_status,owner_id,buyer_id,address,shop_id,number,price,shop_status,order_number)
+		values
+		(#{orders.orderCreateTime},#{orders.orderStatus},#{orders.owner.userId},#{orders.buyer.userId},#{orders.address},#{orders.shop.shopId},#{orders.number},#{orders.price},#{orders.shopStatus},#{orders.orderNumber})
+	</insert>
+	
+	
+	<update id="modifyOrder" parameterType="com.sht.entity.Orders">
+		update tb_orders
+		<set>
+			<if test="orderCreateTime != null">order_create_time=#{orderCreateTime},</if>
+			<if test="orderStatus != null">order_status=#{orderStatus},</if>
+			<if test="owner != null">owner_id=#{owner.userId},</if>
+			<if test="buyer != null">buyer_id=#{buyer.userId},</if>
+			<if test="address != null">address=#{address},</if>
+			<if test="shop != null">shop_id=#{shop.shopId},</if>
+			<if test="number != null">number=#{number},</if>
+			<if test="price != null">price=#{price},</if>
+			<if test="shopStatus != null">shop_status=#{shopStatus},</if>
+			<if test="orderNumber != null">order_number=#{orderNumber}</if>
+		</set>
+		where
+		order_id=#{orderId}
+	</update>
+	
+	
+	
+	<delete id="deleteOrder">
+		DELETE from tb_orders where order_id=#{orderId}
+	</delete>
+	
+	
+	
+	<select id="queryOrders" resultMap="orderMap">
+		select
+		s.shop_id,s.shop_name,
+		o.order_id,o.order_create_time,o.order_status,o.address,o.number,o.price,o.shop_status,o.order_number,
+		owners.user_id as owners_id,owners.user_name as owners_name,owners.phone as owners_phone,owners.money as owners_money,
+		buyer.user_id as buyer_id,buyer.user_name as buyer_name,buyer.phone as buyer_phone,buyer.money as buyer_money
+		from
+		tb_shop s,
+		tb_orders o,
+		tb_person owners,
+		tb_person buyer
+		<where>
+		<if test="orders.orderId != null">order_id=#{orders.orderId}</if>
+			<if test="orders.orderCreateTime != null">and order_create_time=#{orders.orderCreateTime}</if>
+			<if test="orders.orderStatus != null">and order_status=#{orders.orderStatus}</if>
+			<if test="orders.owner != null">and owner_id=#{orders.owner.userId}</if>
+			<if test="orders.buyer != null">and buyer_id=#{orders.buyer.userId}</if>
+			<if test="orders.address != null">and o.address=#{orders.address}</if>
+			<if test="orders.shop != null">and o.shop_id=#{orders.shop.shopId}</if>
+			<if test="orders.number != null">and o.number=#{orders.number}</if>
+			<if test="orders.price != null">and o.price=#{orders.price}</if>
+			<if test="orders.shopStatus != null">and o.shop_status=#{orders.shopStatus}</if>
+			<if test="orders.orderNumber != null">and o.order_number=#{orders.orderNumber}</if>
+			and
+			o.owner_id=owners.user_id
+			and
+			o.buyer_id=buyer.user_id
+			and
+			o.shop_id=s.shop_id
+		</where>
+		order by o.order_create_time DESC
+	</select>
+</mapper>

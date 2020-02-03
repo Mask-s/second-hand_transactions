@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sht.dao.MessageDao">
+	<resultMap type="com.sht.entity.Message" id="resultMessage">
+		<id column="message_id" property="messageId"/>
+		<result column="message_create_time" property="messageCreateTime"/>
+		<result column="details" property="details"/>
+		<association property="shop" column="shop_id" javaType="com.sht.entity.Shop">
+			<id column="shop_id" property="shopId"/>
+		</association>
+		<association property="person" column="user_id" javaType="com.sht.entity.Person">
+			<id column="user_id" property="userId"/>
+			<result column="user_name" property="userName"/>
+		</association>
+	</resultMap>
+
+
+
+
+
+	<insert id="insertMessage" useGeneratedKeys="true" keyProperty="messageId" keyColumn="message_id" parameterType="com.sht.entity.Message">
+		insert into tb_message (message_create_time,shop_id,user_id,details)
+		values
+		(#{messageCreateTime},#{shop.shopId},#{person.userId},#{details})
+	</insert>
+	
+	
+	<select id="queryMessage" resultMap="resultMessage" parameterType="com.sht.entity.Message">
+		select 
+		m.message_create_time,m.message_id,m.details,
+		p.user_id,p.user_name,
+		s.shop_id
+		from 
+		tb_message m,
+		tb_person p,
+		tb_shop s
+		<where>
+			<if test="messageCreateTime != null">message_create_time=#{messageCreateTime}</if>
+			<if test="messageId != null">and message_id=#{messageId}</if>
+			<if test="shop != null">and m.shop_id=#{shop.shopId}</if>
+			<if test="person != null">and m.user_id=#{person.userId}</if>
+			<if test="details != null">and details=#{details}</if>
+			and
+			m.user_id = p.user_id
+			and
+			m.shop_id = s.shop_id
+		</where>
+		order by CONVERT(message_create_time USING gbk) ASC
+	</select>
+	
+</mapper>

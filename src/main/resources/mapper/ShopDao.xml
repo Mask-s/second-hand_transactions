@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sht.dao.ShopDao">
+	<resultMap type="com.sht.entity.Shop" id="shopMap">
+		<id column="shop_id" property="shopId"/>
+		<result column="shop_name" property="shopName"/>
+		<result column="shop_img" property="shopImg"/>
+		<result column="shop_des" property="shopDes"/>
+		<result column="price" property="price"/>
+		<result column="put_away_time" property="putAwayTime"/>
+		<result column="sold_out_time" property="soldOutTime"/>
+		<result column="shop_status" property="shopStatus"/>
+		<result column="counts" property="counts"/>
+		<result column="shop_number" property="shopNumber"/>
+		<association property="person" column="user_id" javaType="com.sht.entity.Person">
+			<id column="user_id" property="userId"/>
+			<result column="user_name" property="userName"/>
+			<result column="phone" property="phone"/>
+			<result column="addr" property="addr"/>
+			<result column="money" property="money"/>
+		</association>
+		<association property="shoptype" column="type_id" javaType="com.sht.entity.ShopType">
+			<id column="type_id" property="typeId"/>
+			<result column="type" property="type"/>
+		</association>
+	</resultMap>
+
+
+
+	<insert id="insertShop" useGeneratedKeys="true" keyColumn="shop_id" keyProperty="shopId">
+		insert into tb_shop
+		(shop_name,shop_img,shop_des,price,put_away_time,sold_out_time,shop_status,counts,shop_number,user_id,type_id)
+		values
+		(#{shopName},#{shopImg},#{shopDes},#{price},#{putAwayTime}
+		,#{soldOutTime},#{shopStatus},#{counts},#{shopNumber},#{person.userId},#{shoptype.typeId})
+	</insert>
+	
+	<delete id="deleteShop" parameterType="int">
+		delete from tb_shop where shop_id=#{shopId}
+	</delete>
+	
+	<update id="updateShop" parameterType="com.sht.entity.Shop">
+		update tb_shop 
+		<set>
+			<if test="shopName != null">shop_name=#{shopName},</if>
+			<if test="shopImg != null">shop_img=#{shopImg},</if>
+			<if test="shopDes != null">shop_des=#{shopDes},</if>
+			<if test="price != null">price=#{price},</if>
+			<if test="putAwayTime != null">put_away_time=#{putAwayTime},</if>
+			<if test="soldOutTime != null">sold_out_time=#{soldOutTime},</if>
+			<if test="shopStatus != null">shop_status=#{shopStatus},</if>
+			<if test="counts != null">counts=#{counts},</if>
+			<if test="shopNumber != null">shop_number=#{shopNumber},</if>
+			<if test="person != null">user_id=#{person.userId},</if>
+			<if test="shoptype != null">type_id=#{shoptype.typeId}</if>
+		</set>
+		where shop_id=#{shopId}
+	</update>
+	
+	<select id="queryConditionShop" resultMap="shopMap">
+		select 
+		s.shop_id,s.shop_name,s.shop_img,s.shop_des,s.price,s.put_away_time,s.sold_out_time,s.shop_status,s.counts,s.shop_number,
+		p.user_id,p.user_name,p.phone,p.addr,p.money,
+		t.type_id,t.type
+		from
+		tb_shop s,
+		tb_person p,
+		tb_shop_type t
+		where
+		s.user_id=p.user_id
+		and
+		s.type_id=t.type_id
+		and
+		s.shop_status=2
+		and
+		s.user_id <![CDATA[!= ]]> #{userId}
+		and
+		(s.shop_name like '%${condition}%'
+		or
+		s.shop_des like '%${condition}%')
+		order by s.counts DESC
+		LIMIT #{rowIndex},#{pageSize}
+	</select>
+	
+	<select id="queryShopById" resultMap="shopMap">
+		select 
+		s.shop_id,s.shop_name,s.shop_img,s.shop_des,s.price,s.put_away_time,s.sold_out_time,s.shop_status,s.counts,s.shop_number,
+		p.user_id,p.user_name,p.phone,p.addr,p.money,
+		t.type_id,t.type
+		from
+		tb_shop s,
+		tb_person p,
+		tb_shop_type t
+		where
+		s.user_id=p.user_id
+		and
+		s.type_id=t.type_id
+		and
+		shop_id=#{shopId}
+	</select>
+	
+	<select id="queryConditionShopByShop" resultMap="shopMap">
+		select 
+		s.shop_id,s.shop_name,s.shop_img,s.shop_des,s.price,s.put_away_time,s.sold_out_time,s.shop_status,s.counts,s.shop_number,
+		p.user_id,p.user_name,p.phone,p.addr,p.money,
+		t.type_id,t.type
+		from
+		tb_shop s,
+		tb_person p,
+		tb_shop_type t
+		<where>
+			<if test="conditionShop.shopId != null">shop_id=#{conditionShop.shopId}</if>
+			<if test="conditionShop.shopName != null">and shop_name like %${conditionShop.shopName}%</if>
+			<if test="conditionShop.shopImg != null">and shop_img=#{conditionShop.shopImg}</if>
+			<if test="conditionShop.shopDes != null">and shop_des like %${conditionShop.shopDes}%</if>
+			<if test="conditionShop.price != null">and price=#{conditionShop.price}</if>
+			<if test="conditionShop.putAwayTime != null">and put_away_time=#{conditionShop.putAwayTime}</if>
+			<if test="conditionShop.soldOutTime != null">and sold_out_time=#{conditionShop.soldOutTime}</if>
+			<if test="conditionShop.shopStatus != null">and shop_status=#{conditionShop.shopStatus}</if>
+			<if test="conditionShop.counts != null">and counts=#{conditionShop.counts}</if>
+			<if test="conditionShop.shopNumber != null">and shop_number=#{conditionShop.shopNumber}</if>
+			<if test="conditionShop.person != null">and s.user_id=#{conditionShop.person.userId}</if>
+			<if test="conditionShop.shoptype != null">and type=#{conditionShop.shoptype.type}</if>
+			<if test="conditionShop.person == null">and s.user_id <![CDATA[!= ]]> #{userId}</if>
+			and
+			s.user_id=p.user_id
+			and
+			s.type_id=t.type_id			
+		</where>
+		order by counts DESC
+		LIMIT #{rowIndex},#{pageSize}
+	</select>
+	
+	<select id="queryConditionShopByPrice" resultMap="shopMap">
+		select 
+		s.shop_id,s.shop_name,s.shop_img,s.shop_des,s.price,s.put_away_time,s.sold_out_time,s.shop_status,s.counts,s.shop_number,
+		p.user_id,p.user_name,p.phone,p.addr,p.money,
+		t.type_id,t.type
+		from
+		tb_shop s,
+		tb_person p,
+		tb_shop_type t
+		where
+		s.user_id=p.user_id
+		and
+		s.type_id=t.type_id
+		and
+		s.shop_status=2
+		and
+		s.user_id <![CDATA[!= ]]> #{userId}
+		and
+		s.price <![CDATA[<]]> #{highPrice}
+		and
+		s.price > #{lowPrice}
+		<if test="type != null"> and t.type = #{type}</if>
+		order by counts DESC
+		LIMIT #{rowIndex},#{pageSize}
+	</select>
+	
+</mapper>

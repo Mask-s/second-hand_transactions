@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+    ">
+	<!-- 配置SpringMVC -->
+	<!-- 1.开启SpringMVC注解模式 -->
+	<mvc:annotation-driven />
+
+	<!-- 2.静态资源默认servlet配置 (1)加入对静态资源的处理：js,gif,png (2)允许使用"/"做整体映射 -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:default-servlet-handler />
+
+	<!-- 3.定义视图解析器 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/html/"></property>
+		<property name="suffix" value=".html"></property>
+	</bean>
+	
+	
+	<!--    thymeleaf的视图解析器   会与冲突ContentNegotiatingViewResolver-->
+<!-- 	<bean id="viewResolver" class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+	    <property name="characterEncoding" value="UTF-8"/>
+	    <property name="templateEngine" ref="templateEngine"/>
+	</bean>
+	模板引擎
+	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+	    <property name="templateResolver" ref="templateResolver"/>
+	</bean>
+	模板解析器
+	<bean id="templateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+	    <constructor-arg ref="servletContext"/>
+	    <property name="prefix" value="/WEB-INF/html/"/>
+	    <property name="suffix" value=".html"/>
+	    <property name="templateMode" value="HTML5"/>
+	    <property name="cacheable" value="false"/>
+	    <property name="characterEncoding" value="UTF-8"/>
+	
+	</bean> -->
+	
+	 <!-- 扫描 aop 包 -->
+    <context:component-scan base-package="com.sht.aop" />
+    <!-- 打开注解扫描 -->
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+
+	<!--配置包扫描-->
+    <context:component-scan base-package="com.sht.scheduled" />
+    <!-- 启动定时 -->
+	<task:annotation-driven />
+	
+	
+	<!-- 文件上传解析器 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"></property>
+		<!-- 20971520=20M=1024*1024*20 -->
+		<property name="maxUploadSize" value="20971520"></property>
+		<property name="maxInMemorySize" value="20971520"></property>
+	</bean>
+
+	<!-- 4.扫描web相关的bean -->
+	<context:component-scan base-package="com.sht.web" />
+	<!-- 5.权限拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/main/test"/>
+			<bean id="TestInterceptor" class="com.sht.interceptor.TestInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+</beans>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>用户管理</title>
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	
+	
+</head>
+<style>
+
+table th, table td {
+	text-align: center;
+	height:20px;
+}
+</style>
+
+<body>
+
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="height:60px;">
+	    <div class="container-fluid">
+	    	<div style="float: left;margin-top:15px;margin-left:20px">
+	    		<p style="font-size: 20px;">系统菜单</p>
+	    	</div>
+			
+		    <div class="navbar-header" style="margin-left:550px;margin-top:10px">
+		        <a class="navbar-brand" style="font-size:30px" href="#">欢迎来到管理系统</a>
+		    </div>
+		    
+		    <div style="float: right;margin-top:20px;margin-right:50px;">
+			    <ul class="nav nav-tabs" style="border:0px" >
+				    <li class="dropdown">
+				        <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="session">
+				        <!-- session填充 -->
+				            <span class="caret"></span></a>
+				        <ul class="dropdown-menu" style="border-radius:6px;text-align:center;">
+				            <li>
+				                <a href="/sht/main/shopmainlist">商城主页</a>
+				                <hr style="margin:0px;">
+				            </li>
+				            <li>
+				            	<a href="/sht/main/user">个人中心</a>
+				            </li>
+				        </ul>
+				    </li>
+				</ul>
+			</div>
+			
+	    </div>
+	</nav>
+
+	<div id="container" style="width: 100%; margin-top: 60px;">
+
+
+		<div style="width: 10%; float: left;text-align: center;background-color: #EEEEEE;height:700px; ">
+			<ul class="nav nav-pills nav-stacked">
+			  <li><p style="font-size: 20px;padding-top:10px;">功能列表</p></li>
+			  <li style="padding-top:20px;"><a href="/sht/main/getperson">用户管理</a></li>
+			  <li><a href="/sht/main/shopstatusmanage">商品审核</a></li>
+			  <li><a href="/sht/main/logmanage">日志查看</a></li>
+			  <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+			  <li><a href="/sht/main/shopmainlist">返回主页</a></li>
+			</ul>
+		</div>
+
+		<div id="content"
+			style="background-color: #EEEEEE; height: 700px; width: 90%; float: right; text-align: center; font-size: 20px">
+			<p style="font-size:20px;float:left;margin-top:10px;margin-left:5px">用户信息列表</p>
+			<div>
+			    <form class="navbar-form navbar-right" role="search" style="margin-right:80px">
+			        <div class="form-group">
+			            <input type="text" class="form-control" id="search" placeholder="Search Name">
+			        </div>
+			        <button type="button" class="btn btn-default" onclick=query(1)>查询</button>
+			        <button type="reset" class="btn btn-default" >清空</button>
+			        &nbsp;&nbsp;&nbsp;&nbsp;
+			        <button type="button" class="btn btn-default" onclick=btn()>新增用户</button>
+			    </form>
+    		</div>
+			
+			<table id="table-info" class="table table-striped" style="width: 100%;">
+				<thead>
+					<tr>
+						<th style="width: 150px; height: 50px">用户序列号</th>
+						<th style="width: 150px">用户昵称</th>
+						<th style="width: 150px">密码</th>
+						<th style="width: 200px">权限</th>
+						<th style="width: 150px">真实姓名</th>
+						<th style="width: 150px">可用余额</th>
+						<th style="width: 150px">联系电话</th>
+						<th style="width: 300px">地址</th>
+						<th style="width: 200px">操作</th>
+					</tr>
+				</thead>
+				<tr id="tr"></tr>
+				<!-- 数据填充 -->
+			</table>
+			<div>
+				<ul class="pagination" id="pagination"style="float:right;margin-right:680px">
+				<!-- 分页内容 -->
+				</ul>
+			</div>
+		</div>
+
+		<div id="footer" style="clear: both; text-align: center; height: 60px;background-color: #EEEEEE;">
+			<hr>
+			版权 © 2019 超级管理员 员工管理
+		</div>
+
+	</div>
+	<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="../resources/js/person/personquery.js"></script>
+
+
+</body>
+</html>

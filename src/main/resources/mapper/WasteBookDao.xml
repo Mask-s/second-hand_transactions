@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sht.dao.WasteBookDao">
+	<resultMap type="com.sht.entity.WasteBook" id="resultWaste">
+		<id column="waste_id" property="wasteId"/>
+		<result column="exchange_hour" property="exchangeHour"/>
+		<result column="waste_status" property="wasteStatus"/>
+		<result column="waste_price" property="wastePrice"/>
+		<result column="waste_des" property="wasteDes"/>
+		<association property="person" column="user_id" javaType="com.sht.entity.Person">
+			<id column="user_id" property="userId"/>
+			<result column="user_name" property="userName"/>
+		</association>
+	</resultMap>
+
+	<insert id="insertWasteBook" useGeneratedKeys="true" keyColumn="waste_id" keyProperty="wasteId" parameterType="com.sht.entity.WasteBook">
+		insert into tb_waste_book
+		(exchange_hour,waste_status,waste_price,waste_des,user_id)
+		values
+		(#{exchangeHour},#{wasteStatus},#{wastePrice},#{wasteDes},#{person.userId})
+	</insert>
+	
+	<select id="queryWasteBook" parameterType="com.sht.entity.WasteBook" resultMap="resultWaste">
+		select
+			w.waste_id,w.exchange_hour,w.waste_status,w.waste_price,w.waste_des,
+			p.user_id,p.user_name
+		from 
+			tb_waste_book w,
+			tb_person p
+		<where>
+			<if test="wasteId != null">waste_id=#{wasteId}</if>
+			<if test="exchangeHour != null">and exchange_hour=#{exchangeHour}</if>
+			<if test="wasteStatus != null">and waste_status=#{wasteStatus}</if>
+			<if test="wastePrice != null">and waste_price=#{wastePrice}</if>
+			<if test="wasteDes != null">and waste_des=#{wasteDes}</if>
+			<if test="person != null">and p.user_id=#{person.userId}</if>
+			and
+			p.user_id=w.user_id
+		</where>
+		order by CONVERT(exchange_hour USING gbk) DESC
+	</select>
+</mapper>

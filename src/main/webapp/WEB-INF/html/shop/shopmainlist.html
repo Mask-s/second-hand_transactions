@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>商城主页</title>
+
+	<!-- <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"> -->
+	<link rel="stylesheet" href="../resources/vendor/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../resources/vendor/css/animate.min.css">
+    <link rel="stylesheet" href="../resources/vendor/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../resources/vendor/perfect-scrollbar/css/perfect-scrollbar.min.css">
+    <link rel="stylesheet" href="../resources/css/app.css">
+    <!--end stylesheets-->
+
+    <!--google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Cairo%7CNosifer%7CPoppins%7CQuicksand:700%7CRaleway%7CTangerine%7CHind+Vadodara" rel="stylesheet">
+    <!--end google fonts-->
+</head>
+<body>
+<!--navigation bars-->
+
+<nav class="site-top-nav">
+    <div class="logo">
+        <a href="#">
+            <img src="../resources/img/watermark.jpg" alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <strong>Second-Hand Trading Platform</strong>
+        </a>
+    </div>
+    <ul class="site-menu">
+        <li><a href="/sht/main/shoplist">购物中心</a></li>
+		<li id="superAdmin" style="display:none;"><a href="/sht/main/getperson">管理员通道</a></li>
+		<li style="display:none;"><a href="/sht/main/user">个人中心</a></li>
+		
+		
+		<li>
+			<a href="javascript:;" id="session" onclick='onclickSession()'>
+				        <!-- session填充 -->
+			<span class="caret"></span></a>
+		</li>
+		
+		
+		
+
+		
+    </ul>
+</nav>
+
+<!-- session 下拉框 -->
+<div id="selectItem" style="width:100px;height:70px;position:absolute;display:none;right:4%;top:6%;line-height:5px;text-align:center;padding-top:14px;background-color:#ffffff;border-radius:10px">
+	<a href="/sht/main/user" style="text-decoration:none;"><span class="font p1" style="font-size:15px;">个人中心</span></a>
+	<hr>
+	<a href="/sht/main/login" style="text-decoration:none;"><span class="font p2" style="font-size:15px;">安全退出</span></a>
+</div>
+
+<!--end navigation bars-->
+
+<!--about banner-->
+<div class="about-banner">
+    <strong class="animated slideInDown">We Bring You</strong>
+    <h1 class="animated slideInDown"><strong>A Market for your old goods<br> When you don't need it.</strong></h1>
+    <p class="animated slideInDown">
+        If you want to buy goods cheaply or sell some goods<br>
+        You can join us!
+    </p>
+    <div style="width:100%;margin-top:50px">
+	    <div style="float:left;margin-left:100px;"><a href="/sht/main/shoplist" class="ui-btn ui-btn-info btn-shadow">I want to buy</a></div>
+	    <div style="float:right;margin-right:100px"><a href="/sht/main/operationshop" class="ui-btn ui-btn-info btn-shadow">I want to sell</a></div>
+	</div>
+</div>
+<!--end about banner-->
+
+<div class="our-team" style="height:500px;">
+	<h1 style="text-align:center"><strong>热门商品展示</strong></h1><br>
+	<div id="shoplist" style="text-align:center;line-height:10px;height:295px">
+	
+	<!-- 商品填充 -->
+
+		
+	</div>
+	<div style="margin-right:10px;margin-top:15px;float:right"><a href="/sht/main/shoplist" class="ui-btn ui-btn-info btn-shadow">进入商城查看更多 --></a></div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="bottom-strip">
+    <div class="cards-accepted">
+        <em>Cards Accepted:</em>
+    </div>
+    <div class="copyright"><i class="fa fa-copyright"></i> <span>Copyright &copy; 2019.Company name All rights.</span></div>
+    <div class="country"><span>China</span></div>
+</div>
+
+
+
+
+
+
+	<!-- <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+	<script src="../resources/vendor/js/jquery-3.2.1.min.js"></script>
+	<script src="../resources/vendor/js/popper.js"></script>
+	<script src="../resources/vendor/js/bootstrap.min.js"></script>
+	<script src="../resources/vendor/js/alertify.js"></script>
+	<script src="../resources/vendor/js/jquery.knob.min.js"></script>
+	<!--[if IE]><script type="text/javascript" src="vendor/js/excanvas.js"></script><![endif]-->
+	<script src="../resources/vendor/js/summernote-bs4.min.js"></script>
+	<script src="../resources/vendor/js/dropzone.js"></script>
+	<script src="../resources/vendor/OwlCarousel2-2.2.1/owl.carousel.min.js"></script>
+	<script src="../resources/vendor/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"></script>
+	<script src="../resources/vendor/js/typed.js"></script>
+	<script src="../resources/js/app.js"></script>
+	<script src="../resources/js/shop/shopmainlist.js"></script>
+<!--end scripts-->
+</body>
+</html>
