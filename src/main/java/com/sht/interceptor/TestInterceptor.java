@@ -33,6 +33,7 @@ public class TestInterceptor implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		Cookie[] cookies = request.getCookies();
+		Person session = (Person)request.getSession().getAttribute("user");
 		if (cookies != null) {
 			String user_cookie = "";
 			for (int i = 0; i < cookies.length; i++) {
@@ -45,16 +46,17 @@ public class TestInterceptor implements HandlerInterceptor{
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-			if (user_cookie != null && !user_cookie.equals("")) {
+			if(session != null) {
+				return true;
+			}else if (user_cookie != null && !user_cookie.equals("")) {
 				Person user = null;
 				ObjectMapper objectMapper = new ObjectMapper();
 				user = objectMapper.readValue(user_cookie, Person.class);
-				System.out.println(user.getUserName());
+				request.getSession().setAttribute("user", user);
 				return true;
 			}else {
 				response.sendRedirect("/sht/main/login");
 			}
- 
 		}
 		return false;
 	}

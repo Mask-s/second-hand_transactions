@@ -20,8 +20,6 @@ $(function(){
 	$.getJSON(getsessionurl,function(data){
 		if(data.success){
 			userId = data.session.userId;
-		}else{
-			window.location.href='/sht/main/login';
 		}
 	})
 	

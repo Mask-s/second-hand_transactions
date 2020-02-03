@@ -76,7 +76,9 @@
 	<!-- 5.权限拦截器 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/main/test"/>
+			<mvc:mapping path="/main/**"/>
+			<mvc:exclude-mapping path="/main/operationperson"/>
+			<mvc:exclude-mapping path="/main/login"/>
 			<bean id="TestInterceptor" class="com.sht.interceptor.TestInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
